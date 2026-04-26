@@ -209,12 +209,13 @@ function App() {
           </div>
         </div>
         {/* BOTON DE REGRESO */}
-        <a
-          href="https://juegos-cohorsil-libreria.vercel.app/"
-          className="btn-back-card"
+       <button
+         type="button"
+        className="boton-volver"
+        onClick={() => window.location.href = "https://juegos-cohorsil-libreria.vercel.app/"}
         >
-          ‹
-        </a>
+        < span>‹</span>
+          </button>
       </div>
     </div>
   );
