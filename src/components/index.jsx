@@ -216,7 +216,7 @@ function App() {
            className="boton-volver"
            onClick={() => window.location.href = "https://juegos-cohorsil-libreria.vercel.app/"}
           >
-           <ChevronLeft size={50} />
+           <ChevronLeft size={40} />
           </button>
 
       </div>
