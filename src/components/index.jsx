@@ -146,18 +146,18 @@ function App() {
         {showSadBurst && (
           <div className="celebration-layer" aria-hidden="true">
             <div className="sad-burst sad-burst-screen">
-              <span className="sad-face sad-red">☹</span>
-              <span className="sad-face sad-yellow">☹</span>
-              <span className="sad-face sad-blue">☹</span>
-              <span className="sad-face sad-orange">☹</span>
-              <span className="sad-face sad-green">☹</span>
-              <span className="sad-face sad-red">☹</span>
-              <span className="sad-face sad-yellow">☹</span>
-              <span className="sad-face sad-blue">☹</span>
-              <span className="sad-face sad-orange">☹</span>
-              <span className="sad-face sad-green">☹</span>
-              <span className="sad-face sad-red">☹</span>
-              <span className="sad-face sad-yellow">☹</span>
+              <span className="sad-face sad-red">😔</span>
+              <span className="sad-face sad-yellow">😔</span>
+              <span className="sad-face sad-blue">😔</span>
+              <span className="sad-face sad-orange">😔</span>
+              <span className="sad-face sad-green">😔</span>
+              <span className="sad-face sad-red">😔</span>
+              <span className="sad-face sad-yellow">😔</span>
+              <span className="sad-face sad-blue">😔</span>
+              <span className="sad-face sad-orange">😔</span>
+              <span className="sad-face sad-green">😔</span>
+              <span className="sad-face sad-red">😔</span>
+              <span className="sad-face sad-yellow">😔</span>
             </div>
           </div>
         )}
@@ -193,8 +193,7 @@ function App() {
 
             {/* Titulo de la seccion de premios. */}
             <h2 className="premios-title">
-              <span role="img" aria-label="Regalo">🎁</span> Premios{" "}
-              <span role="img" aria-label="Celebracion">🎉</span>
+              🎁 Premios 🎉
             </h2>
 
             {/* Dibuja una tarjeta por cada premio activo. */}
@@ -209,6 +208,13 @@ function App() {
             <br />
           </div>
         </div>
+        {/* BOTON DE REGRESO */}
+        <a
+          href="https://juegos-cohorsil-libreria.vercel.app/"
+          className="btn-back-card"
+        >
+          ‹
+        </a>
       </div>
     </div>
   );

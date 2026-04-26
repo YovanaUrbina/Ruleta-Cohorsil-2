@@ -523,3 +523,18 @@ body {
     width: min(92vw, 450px);
   }
 }
+.btn-back-card {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #dad00f;
+  color: white;
+  font-size: 60px;
+  text-align: center;
+  line-height: 90px;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(255, 152, 0, 0.35);
+}
