@@ -6,6 +6,7 @@ import BayerLogo from "../img/BAYER.png";
 import cohorsil from "../img/cohorsil.png";
 import syngenta from "../img/syngenta.png";
 import "./index.css";
+import { ChevronLeft } from "lucide-react";
 
 // Define los 10 segmentos reales de la ruleta y si cada uno gana o pierde.
 const SEGMENTOS = [
@@ -209,15 +210,15 @@ function App() {
           </div>
         </div>
 
-         {/* BOTON DE REGRESO */}
-       <button
-         type="button"
-        className="boton-volver"
-        onClick={() => window.location.href = "https://juegos-cohorsil-libreria.vercel.app/"}
-        >
-        <span>‹</span>
+       {/* BOTON DE REGRESO */}
+          <button
+           type="button"
+           className="boton-volver"
+           onClick={() => window.location.href = "https://juegos-cohorsil-libreria.vercel.app/"}
+          >
+           <ChevronLeft size={20} />
           </button>
-       
+
       </div>
     </div>
   );
