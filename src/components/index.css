@@ -530,16 +530,16 @@ body {
 
 .boton-volver {
   position: absolute;
-  left: 36px;
-  bottom: 10px;
+  left: 15px;
+  bottom: 20px;
 
-  width: 92px;
-  height: 92px;
+  width: 70px;
+  height: 70px;
   border-radius: 999px;
   border: none;
 
   background: #e1d600;
-  color: #155f6b;
+  color: #ffffff;
 
   display: flex;
   align-items: center;
@@ -558,8 +558,8 @@ body {
 .boton-volver:hover,
 .boton-volver:focus,
 .boton-volver:active {
-  background: #e1d600;
-  color: #155f6b;
+  background: #aea501;
+  color: #ffffff;
 }
 
 .boton-volver:hover {
