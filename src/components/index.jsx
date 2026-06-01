@@ -198,7 +198,7 @@ function App() {
           </div>
         </div>
 
-        <div className="game-shell" style={{ transform: "translateX(10px)" }}>
+        <div className="game-shell" style={{ transform: "translateX(5px)" }}>
 
 
           {/* Titulo de la seccion de premios. */}
