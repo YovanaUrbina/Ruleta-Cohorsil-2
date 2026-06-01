@@ -15,11 +15,11 @@ const SEGMENTOS = [
   { numero: 2, color: "amarillo", premio: "Sombrilla", win: true, peso: 15 },
   { numero: 3, color: "verde", premio: "Gorra", win: true, peso: 7.5 },
   { numero: 4, color: "verde aqua", premio: null, win: false, peso: 10 },
-  { numero: 5, color: "azul claro", premio: "Gorra", win: true, peso: 7.5 },
+  { numero: 5, color: "azul claro", premio: "Sombrero", win: true, peso: 15 },
   { numero: 6, color: "azul oscuro", premio: null, win: false, peso: 10 },
   { numero: 7, color: "morado", premio: "Bolsa", win: true, peso: 7.5 },
   { numero: 8, color: "rosado", premio: null, win: false, peso: 10 },
-  { numero: 9, color: "rosado oscuro", premio: "Sombrero", win: true, peso: 15 },
+  { numero: 9, color: "rosado oscuro", premio: "Gorra", win: true, peso: 7.5 },
 ];
 
 // La imagen "Ruleta_Nueva.png" ya tiene la sombrilla amarilla centrada perfectamente arriba.
@@ -198,7 +198,7 @@ function App() {
           </div>
         </div>
 
-        <div className="game-shell" style={{ transform: "translateX(-5px)" }}>
+        <div className="game-shell" style={{ transform: "translateX(10px)" }}>
 
 
           {/* Titulo de la seccion de premios. */}

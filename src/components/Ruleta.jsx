@@ -1,5 +1,5 @@
 import React from "react";
-import ruleta from "../img/Ruleta_2.png";
+import ruleta from "../img/Ruleta2.png";
 import Flecha from "../img/flechadorada.png";
 
 import "./index.css";
