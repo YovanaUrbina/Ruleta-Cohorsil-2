@@ -10,26 +10,21 @@ import { ChevronLeft } from "lucide-react";
 
 // Define los 10 segmentos reales de la ruleta y si cada uno gana o pierde.
 const SEGMENTOS = [
-  { numero: 0, color: "naranja", premio: "Lapiz", win: true },
-  { numero: 1, color: "rojo", premio: null, win: false },
-  { numero: 2, color: "azul", premio: "Termo", win: true },
-  { numero: 3, color: "amarillo", premio: null, win: false },
-  { numero: 4, color: "verde", premio: "Gorra", win: true },
-  { numero: 5, color: "naranja", premio: "Lapiz", win: true },
-  { numero: 6, color: "rojo", premio: null, win: false },
-  { numero: 7, color: "azul", premio: "Termo", win: true },
-  { numero: 8, color: "amarillo", premio: null, win: false },
-  { numero: 9, color: "verde", premio: "Gorra", win: true },
+  { numero: 0, color: "rojo", premio: "Bolsa", win: true, peso: 7.5 },
+  { numero: 1, color: "naranja", premio: null, win: false, peso: 10 },
+  { numero: 2, color: "amarillo", premio: "Sombrilla", win: true, peso: 15 },
+  { numero: 3, color: "verde", premio: "Gorra", win: true, peso: 7.5 },
+  { numero: 4, color: "verde aqua", premio: null, win: false, peso: 10 },
+  { numero: 5, color: "azul claro", premio: "Gorra", win: true, peso: 7.5 },
+  { numero: 6, color: "azul oscuro", premio: null, win: false, peso: 10 },
+  { numero: 7, color: "morado", premio: "Bolsa", win: true, peso: 7.5 },
+  { numero: 8, color: "rosado", premio: null, win: false, peso: 10 },
+  { numero: 9, color: "rosado oscuro", premio: "Sombrero", win: true, peso: 15 },
 ];
 
-// La imagen base empieza con un corte en la parte superior.
-// Este offset la acomoda para que el centro del primer segmento
-// (naranja) quede apuntando a la flecha al cargar la pantalla. 
-// esta es la ruta de la imagen con segmentos Ruleta2\src\img\segmentos.png
-//esta es la ruta de los colores base y su orden en segmentos - Ruleta2\src\img\colores-base.png
-//puede usar cualquier imagen dividida en 10 segmentos siempre que el orden de colores sea el mismo que el definido en SEGMENTOS.
-// o cambiar const SEGMENTOS para que coincida con el orden de colores de la imagen que se use.
-const OFFSET_INICIAL_NARANJA = 360 / SEGMENTOS.length / 2;
+// La imagen "Ruleta_Nueva.png" ya tiene la sombrilla amarilla centrada perfectamente arriba.
+// La imagen de la ruleta esta perfectamente alineada con la bolsa roja en el grado 0.
+const OFFSET_INICIAL_NARANJA = 0;
 
 function App() {
   // Guarda el angulo actual de la ruleta.
@@ -47,12 +42,10 @@ function App() {
 
   // Premios visibles en la lista inferior.
   const premios = [
-    // { id: 1, premio: "Sombrero", precio: "" },
-    // { id: 2, premio: "Taza", precio: "" },
-    // { id: 3, premio: "Taza", precio: "" },
-    { id: 4, premio: "Lapiz", precio: "" },
-    { id: 5, premio: "Gorra", precio: "" },
-    { id: 6, premio: "Termo", precio: "" },
+    { id: 1, premio: "Gorra", precio: "" },
+    { id: 2, premio: "Sombrilla", precio: "" },
+    { id: 4, premio: "Sombrero", precio: "" },
+    { id: 5, premio: "Bolsa", precio: "" },
   ];
 
   const ruleta = useRef(null);
@@ -100,16 +93,43 @@ function App() {
     const segmentos = SEGMENTOS.length;
     const gradosCirculo = 360;
     const gradosSegmento = gradosCirculo / segmentos;
-    const centroSegmento = gradosSegmento / 2;
-    const valorAleatorio = Math.floor(Math.random() * segmentos);
-    const valorPremio = gradosCirculo * 5 + centroSegmento + valorAleatorio * gradosSegmento;
+
+    // Logica de "ruleta trucada" para igualar la probabilidad de los premios
+    let sumaPesos = 0;
+    for (let i = 0; i < SEGMENTOS.length; i++) {
+      sumaPesos += SEGMENTOS[i].peso;
+    }
+
+    let valorAleatorio = 0;
+    let maxIntentos = 10; // Evita ciclos infinitos
+
+    // Sistema Anti-Repetición: Sigue tirando los dados si sale lo mismo que la vez anterior
+    do {
+      let random = Math.random() * sumaPesos;
+      for (let i = 0; i < SEGMENTOS.length; i++) {
+        if (random < SEGMENTOS[i].peso) {
+          valorAleatorio = i;
+          break;
+        }
+        random -= SEGMENTOS[i].peso;
+      }
+      maxIntentos--;
+    } while (
+      maxIntentos > 0 &&
+      (
+        valorAleatorio === ruletsData || // Evita caer en el mismo pedazo físico
+        (resultado && resultado.premio && SEGMENTOS[valorAleatorio].premio === resultado.premio) // Evita dar el mismo premio 2 veces
+      )
+    );
+
+    const valorPremio = gradosCirculo * 5 + valorAleatorio * gradosSegmento;
 
     setResultado(null);
     setShowCelebration(false);
     setShowSadBurst(false);
     setRuletsData(valorAleatorio);
-    // Reinicia el angulo en el centro del ultimo segmento para evitar saltos visuales.
-    setDataRuleta(ruletaTemp * gradosSegmento + centroSegmento);
+    // Reinicia el angulo en el ultimo segmento para evitar saltos visuales.
+    setDataRuleta(ruletaTemp * gradosSegmento);
     setAnimatedRuleta(true);
 
     setTimeout(() => {
@@ -167,7 +187,7 @@ function App() {
         <div className="logos-shell">
           <div className="logos-grid">
             <div className="logo-slot">
-              <img src={BayerLogo} alt="Bayer" className="logo-side" />
+              <img src={BayerLogo} alt="Bayer" className="logo-side " />
             </div>
             <div className="logo-slot">
               <img src={cohorsil} alt="COHORSIL" className="logo-center" />
@@ -178,46 +198,65 @@ function App() {
           </div>
         </div>
 
-        <div className="container">
-          <div className="game-shell">
-         
+        <div className="game-shell" style={{ transform: "translateX(-5px)" }}>
 
-            {/* Ruleta principal con flecha y boton de accion. */}
-            <Ruleta
+
+          {/* Titulo de la seccion de premios. */}
+          <h2 className="premios-title">
+            🎁 Premios 🎉
+          </h2>
+
+          {/* Dibuja una tarjeta por cada premio activo. */}
+          {premios.map((item, index) => (
+            <Premios
+              key={item.id}
+              indice={index}
+              data={item}
               total_points={0}
-              animatedRuleta={animatedRuleta}
-              data_ruleta={dataRuleta}
-              showRuletaResult={showRuletaResult}
-              animarEvent={animarEvent}
-              ruleta={ruleta}
             />
+          ))}
+          <br />
 
-            {/* Titulo de la seccion de premios. */}
-            <h2 className="premios-title">
-              🎁 Premios 🎉
-            </h2>
-
-            {/* Dibuja una tarjeta por cada premio activo. */}
-            {premios.map((item, index) => (
-              <Premios
-                key={item.id}
-                indice={index}
-                data={item}
-                total_points={0}
-              />
-            ))}
-            <br />
+          {/* Mensaje de Resultado Integrado (Aparece sin interrumpir) */}
+          <div style={{ minHeight: "80px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {resultado && (
+              <div style={{
+                background: resultado.win ? "#d1fae5" : "#fee2e2",
+                color: resultado.win ? "#065f46" : "#991b1b",
+                padding: "16px 32px",
+                borderRadius: "20px",
+                border: `2px solid ${resultado.win ? "#34d399" : "#f87171"}`,
+                boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
+                animation: "fadeIn 0.5s ease-out"
+              }}>
+                <h3 style={{ margin: 0, fontSize: "clamp(1.5rem, 4vw, 2.2rem)", fontWeight: "800", display: "flex", alignItems: "center", gap: "10px" }}>
+                  {resultado.win ? `🎉 ¡Has ganado: ${resultado.premio}! 🎉` : "😢 Sigue intentándolo..."}
+                </h3>
+              </div>
+            )}
           </div>
+
+          {/* Ruleta principal con flecha y boton de accion. */}
+          <Ruleta
+            total_points={0}
+            animatedRuleta={animatedRuleta}
+            data_ruleta={dataRuleta}
+            showRuletaResult={showRuletaResult}
+            animarEvent={animarEvent}
+            ruleta={ruleta}
+            segmentos={SEGMENTOS}
+          />
+          <br />
         </div>
 
-       {/* BOTON DE REGRESO */}
-          <button
-           type="button"
-           className="boton-volver"
-           onClick={() => window.location.href = "https://juegos-cohorsil-libreria.vercel.app/"}
-          >
-           <ChevronLeft size={40} />
-          </button>
+        {/* BOTON DE REGRESO */}
+        <button
+          type="button"
+          className="boton-volver"
+          onClick={() => window.location.href = "https://juegos-cohorsil-libreria.vercel.app/"}
+        >
+          <ChevronLeft size={40} />
+        </button>
 
       </div>
     </div>
